@@ -1,0 +1,33 @@
+{% set version = "0.1.0" %}
+{% set ncov2019_artic_nf_version = "v0.7.0" %}
+
+package:
+  name: qcat-ncov2019-artic-nf
+  version: "{{ version }}"
+
+build:
+  number: 0
+
+source:
+  - git_url: https://github.com/wtsi-team112/ncov2019-artic-nf
+    git_rev: {{ ncov2019_artic_nf_version }}
+    folder: ncov2019-artic-nf
+
+requirements:
+  build:
+    - singularity >=3.5
+  run:
+    - nextflow
+    - qcat
+    - singularity >=3.5
+
+about:
+  home: 
+  summary: |
+    This is an analysis pipeline for Oxford Nanopore sequencing data
+    that comprises two parts; the first part uses Nextflow to run the
+    a modified version od the qcat de-plexer
+    (https://github.com/kjsanger/qcat) to separate barcoded reads,
+    while the second runs another Nextflow pipeline for analysis
+    (https://github.com/wtsi-team112/ncov2019-artic-nf).
+
