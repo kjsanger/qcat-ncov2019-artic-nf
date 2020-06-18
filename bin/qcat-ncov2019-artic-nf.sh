@@ -107,12 +107,17 @@ nextflow run "$QCAT_NF/deplex-qcat.nf" \
          --input "$INPUT_PATH" --output "$QCAT_OUTPUT"
 
 ARTIC_NF="$LOCAL/share/nextflow/ncov2019-artic-nf"
-if [ ! -f "$ARTIC_NF" ] ; then
+if [ ! -d "$ARTIC_NF" ] ; then
     echo -e "\nERROR:\n  Failed to find Artic Nextflow pipeline at $ARTIC_NF"
     exit 5
 fi
 
-ARTIC_IMAGE=${ARTIC_IMAGE:-"$ARTIC_NF/artic-ncov2019-nanopore.sif"} 
+ARTIC_IMAGE=${ARTIC_IMAGE:-"$ARTIC_NF/artic-ncov2019-nanopore.sif"}
+if [ ! -f "$ARTIC_IMAGE" ] ; then
+    echo -e "\nERROR:\n  Failed to find Artic Nextflow pipeline image at $ARTIC_IMAGE"
+    exit 5
+fi
+
 ARTIC_PREFIX=artic
 ARTIC_OUTPUT=$(mktemp -d -t artic.XXXXXXXX)
 nextflow run "$ARTIC_NF" \
