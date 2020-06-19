@@ -119,6 +119,7 @@ if [ ! -f "$ARTIC_IMAGE" ] ; then
 fi
 
 ARTIC_PREFIX=artic
+ARTIC_SCHEME=V3
 ARTIC_OUTPUT=$(mktemp -d -t artic.XXXXXXXX)
 nextflow run "$ARTIC_NF" \
          -c "$ARTIC_NF/nextflow.config" \
@@ -126,6 +127,7 @@ nextflow run "$ARTIC_NF" \
          -profile lsf,singularity,sanger \
          --container $ARTIC_NF/artic-ncov2019-nanopore.sif \
          --medaka --basecalled_fastq "$QCAT_OUTPUT" \
+         --schemeVersion ${ARTIC_SCHEME} \
          --prefix ${ARTIC_PREFIX} \
          --outdir ${ARTIC_OUTPUT}
 
