@@ -1,0 +1,46 @@
+diff --git conf/nanopore.config conf/nanopore.config
+index 4baa800..85bc73a 100644
+--- conf/nanopore.config
++++ conf/nanopore.config
+@@ -18,4 +18,6 @@ params {
+     // Output cram instead of bam files
+     outCram = false
+ 
++    // Ignore barcodes having fewer than this number of reads in total
++    minReadsPerBarcode = 100
+ }
+diff --git main.nf main.nf
+index afd4979..67a919d 100644
+--- main.nf
++++ main.nf
+@@ -91,8 +91,15 @@ workflow {
+             // Yes, barcodes!
+             Channel.fromPath( nanoporeBarcodeDirs )
+                    .filter( ~/.*barcode[0-9]{1,4}$/ )
+-                   .filter{ it.listFiles().size() > 5 }
+-                   .set{ ch_fastqDirs }
++                   .filter{ d ->
++                            def count = 0
++                            for (x in d.listFiles()) {
++                                if (x.isFile()) {
++                                    count += x.countFastq()
++                                }
++                            }
++                            count > params.minReadsPerBarcode
++                   }.set{ ch_fastqDirs }
+        } else if ( nanoporeNoBarcode ){
+             // No, no barcodes
+             Channel.fromPath( "${params.basecalled_fastq}", type: 'dir', maxDepth: 1 )
+diff --git modules/help.nf modules/help.nf
+index 25caff7..b242995 100644
+--- modules/help.nf
++++ modules/help.nf
+@@ -41,6 +41,8 @@ def printHelp() {
+       --max_length            Maximum read length for artic guppyplex (Default: 700)
+       --bwa                   Use BWA for mapping Nanopore reads (Default: false, use Minimap2)
+       --outCram               Output cram instead of bam files (Default: false)
++      --minReadsPerBarcode    Minimum number of reads accepted for a single barcode when supplying deplexed Fastq
++                              files as input. Barcodes having fewer reads are ignored. (Default: 100)
+  
+   Illumina workflow options:
+     Mandatory:

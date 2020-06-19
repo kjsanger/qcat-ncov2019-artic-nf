@@ -12,6 +12,8 @@ source:
   - git_url: https://github.com/wtsi-team112/ncov2019-artic-nf
     git_rev: {{ ncov2019_artic_nf_version }}
     folder: ncov2019-artic-nf
+    patches:
+      - min_reads_per_barcode.patch
 
 requirements:
   build:
