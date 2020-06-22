@@ -103,6 +103,7 @@ fi
 
 QCAT_OUTPUT=$(mktemp -d -t qcat.XXXXXXXX)
 nextflow run "$QCAT_NF/deplex-qcat.nf" \
+         -c "$QCAT_NF/nextflow.config" \
          -c "$QCAT_NF/sanger.config" \
          --input "$INPUT_PATH" --output "$QCAT_OUTPUT"
 
