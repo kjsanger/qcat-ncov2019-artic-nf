@@ -1,4 +1,4 @@
-{% set version = "0.1.0" %}
+{% set version = "0.2.0" %}
 {% set ncov2019_artic_nf_version = "v0.7.0" %}
 
 package:
@@ -32,4 +32,3 @@ about:
     (https://github.com/kjsanger/qcat) to separate barcoded reads,
     while the second runs another Nextflow pipeline for analysis
     (https://github.com/wtsi-team112/ncov2019-artic-nf).
-
