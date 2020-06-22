@@ -1,11 +1,26 @@
+
+// The input directory, which must contain Fastq files to be de-plexed.
 params.input = './input'
+
+// The output directory, which will contain one directory per barcode
+// and an additional directory for unassigned reads.
 params.output = './output'
+
+// The number of input Fastq files that will be batched together in a
+// single invocation of qcat.
 params.batchSize = 10
 
+// The qcat barcode kit parameter.
 params.kit = 'PBC096andrew'
+
+// The qcat minScore parameter.
 params.minScore = 60
+
+// The qcat minReadLength parameter.
 params.minReadLength = 100
 
+// The qcat adapter/barcode trim parameter.
+params.trim = false
 
 // Batch the multiplexed, compressed fastq files from sequencing to be
 // uncompressed and concatenated into an input file for qcat to
@@ -78,8 +93,14 @@ process deplex_qcat {
     file("out/none.fastq") into bc_unassigned_ch
 
     script:
+    if (params.trim){
+        qcatCmd = "qcat --trim"
+    } else {
+        qcatCmd = "qcat"
+    }
+
     """
-    qcat --fastq $combined --kit ${params.kit} --epi2me \
+    ${qcatCmd} --fastq $combined --kit ${params.kit} --epi2me \
       --min-score ${params.minScore} \
       --min-read-length ${params.minReadLength} \
       --require-barcodes-both-ends \
