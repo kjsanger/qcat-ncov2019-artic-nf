@@ -8,7 +8,7 @@ params.output = './output'
 
 // The number of input Fastq files that will be batched together in a
 // single invocation of qcat.
-params.batchSize = 10
+params.batchSize = 50
 
 // The qcat barcode kit parameter.
 params.kit = 'PBC096andrew'
@@ -20,7 +20,7 @@ params.minScore = 60
 params.minReadLength = 100
 
 // The qcat adapter/barcode trim parameter.
-params.trim = false
+params.trim = true
 
 // Batch the multiplexed, compressed fastq files from sequencing to be
 // uncompressed and concatenated into an input file for qcat to

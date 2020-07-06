@@ -105,6 +105,9 @@ QCAT_OUTPUT=$(mktemp -d -t qcat.XXXXXXXX)
 nextflow run "$QCAT_NF/deplex-qcat.nf" \
          -c "$QCAT_NF/nextflow.config" \
          -c "$QCAT_NF/sanger.config" \
+         --batchSize 50 \
+         --kit PBC096andrew \
+         --trim \
          --input "$INPUT_PATH" --output "$QCAT_OUTPUT"
 
 ARTIC_NF="$LOCAL/share/nextflow/ncov2019-artic-nf"

@@ -8,10 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.0] - 2020-07-06
 
+### Added
+
+- Add paramters to the wrapper script to set adapter/barcode trimming
+  on, the barcode set to be "PBC096andrew" and the Fastq batch size to
+  be 50.
+
 ### Changed
 
 - Update ncov2019-artic-nf from v0.7.0 to v0.9.0,
   removing the need to patch the nanopore workflow.
+
+- Barcode/adapter trimming from off to on.
+
+- Default Fastq batch size from 10 to 50.
 
 ## [0.2.0] - 2020-06-22
 
